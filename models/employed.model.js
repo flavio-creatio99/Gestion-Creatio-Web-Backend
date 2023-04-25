@@ -4,7 +4,7 @@ const { DataTypes } = require("sequelize");
 const Employed = sequelize.define(
   "Employed",
   {
-    uuid: {
+    id: {
       type: DataTypes.UUIDV4,
       primaryKey: true,
     },
@@ -21,6 +21,12 @@ const Employed = sequelize.define(
     password: {
       type: DataTypes.TEXT,
     },
+    isManager: {
+      type:DataTypes.BOOLEAN
+    },
+    phone: {
+      type: DataTypes.INTEGER
+    }
   },
   {
     timestamps: false,

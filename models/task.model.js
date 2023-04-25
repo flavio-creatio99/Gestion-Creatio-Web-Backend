@@ -4,7 +4,7 @@ const { DataTypes } = require("sequelize");
 const Task = sequelize.define(
     "Task",
     {
-        uuid: {
+        id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
@@ -12,10 +12,23 @@ const Task = sequelize.define(
         name: {
             type: DataTypes.TEXT
         },
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        },
         createdDate: {
-            type: DataTypes.DATEONLY
-        }
-
+            type: DataTypes.DATEONLY,
+            defaultValue: DataTypes.NOW
+        },
+        expiresDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        }, 
+        isFinished: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
     },
     {
         timestamps: false,
