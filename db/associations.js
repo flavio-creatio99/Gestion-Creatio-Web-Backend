@@ -3,13 +3,13 @@ const Employed = require('../models/employed.model');
 
 const associations = () => {
   // Generate associations between task and employed
-  Task.hasOne(Employed, {
-    as: 'manager',
+  Employed.hasOne(Task, {
+    as: 'task',
     foreignKey: 'employedId',
   });
 
-  Employed.belongsTo(Task, {
-    as: 'task',
+  Task.belongsTo(Employed, {
+    as: 'manager',
     foreignKey: 'employedId',
   });
 };

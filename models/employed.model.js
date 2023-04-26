@@ -5,7 +5,7 @@ const Employed = sequelize.define(
   "Employed",
   {
     id: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       primaryKey: true,
     },
     name: {
