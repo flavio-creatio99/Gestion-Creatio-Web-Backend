@@ -7,8 +7,10 @@ let enviroment = null;
 
 if (NODE_ENV === consts.PRODUCTION) {
   enviroment = config.production;
-} else {
+} else if (NODE_ENV === consts.DEVELOP) {
   enviroment = config.development;
+} else {
+  enviroment = config.test;
 }
 
 const DBNAME = enviroment.database;

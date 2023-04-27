@@ -1,26 +1,45 @@
-const { check } = require('express-validator');
+const { body, param } = require('express-validator');
 const { validatorHandler } = require('../shared/validator.handler');
 
+const taskFindByIdValidator = [
+  param('id').exists().withMessage('The id parameter is required'),
+  (req, res, next) => {
+    validatorHandler(req, res, next);
+  },
+];
+
 const taskCreateValidator = [
-  check('name').escape().notEmpty().withMessage('Please input a name task'),
-  check('description')
+  body('name').escape().notEmpty().withMessage('Please input a name task'),
+  body('description')
     .escape()
     .notEmpty()
     .withMessage('Please input a description task'),
-  check('expiresDate').optional().isDate(),
+  body('expiresDate').optional().isDate(),
   (req, res, next) => {
     validatorHandler(req, res, next);
   },
 ];
 
 const taskUpdateValidator = [
-  check('name').escape().notEmpty().withMessage('Please input a name task'),
-  check('description').optional().escape(),
-  check('expiresDate').optional().isDate(),
-  check('isFinished').optional().isBoolean(),
+  body('name').escape().notEmpty().withMessage('Please input a name task'),
+  body('description').optional().escape(),
+  body('expiresDate').optional().isDate(),
+  body('isFinished').optional().isBoolean(),
   (req, res, next) => {
     validatorHandler(req, res, next);
   },
 ];
 
-module.exports = { taskCreateValidator, taskUpdateValidator };
+const taskDeleteValidator = [
+  param('id').exists().withMessage('The id parameter is required'),
+  (req, res, next) => {
+    validatorHandler(req, res, next);
+  },
+];
+
+module.exports = {
+  taskFindByIdValidator,
+  taskCreateValidator,
+  taskUpdateValidator,
+  taskDeleteValidator,
+};

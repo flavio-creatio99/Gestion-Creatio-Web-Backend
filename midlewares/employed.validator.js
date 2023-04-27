@@ -1,6 +1,13 @@
 const { body, param } = require('express-validator');
 const { validatorHandler } = require('../shared/validator.handler');
 
+const employedFindByIdValidator = [
+  param('id').exists().withMessage('The id parameter is required'),
+  (req, res, next) => {
+    validatorHandler(req, res, next);
+  },
+];
+
 const employedCreateValidator = [
   body('name').escape().notEmpty().withMessage('Please input your name'),
   body('surname').escape().notEmpty().withMessage('Please input your surname'),
@@ -10,7 +17,7 @@ const employedCreateValidator = [
     .trim()
     .withMessage('This field cannot have spaces')
     .isEmail()
-    .withMessage('This field needs to be an email')
+    .withMessage('This field needs to bevalidatorHandler an email')
     .withMessage('Please input your email')
     .custom(({ req: request }) =>
       request.body.email.includes('@creatio-control.com')
@@ -42,20 +49,11 @@ const employedCreateValidator = [
 ];
 
 const employedUpdateValidator = [
-  param('id').exists(),
-  body('name')
-    .optional()
-    .escape()
-    .notEmpty()
-    .withMessage('Please input your name'),
-  body('surname')
-    .optional()
-    .escape()
-    .notEmpty()
-    .withMessage('Please input your surname'),
+  param('id').exists().withMessage('The id parameter is required'),
+  body('name').optional().escape(),
+  body('surname').optional().escape(),
   body('password')
     .optional()
-    .notEmpty()
     .isStrongPassword({
       minLength: 6,
       minUppercase: 1,
@@ -67,8 +65,7 @@ const employedUpdateValidator = [
   body('isManager').optional().isBoolean(),
   body('phone')
     .optional()
-    .notEmpty()
-    .withMessage('Please input your phone')
+    .escape()
     .isNumeric()
     .isMobilePhone({
       //options identifica la localización del telefono en el país el cual pertenece
@@ -80,4 +77,16 @@ const employedUpdateValidator = [
   },
 ];
 
-module.exports = { employedCreateValidator, employedUpdateValidator };
+const employedDeleteValidator = [
+  param('id').exists().withMessage('The id parameter is required'),
+  (req, res, next) => {
+    validatorHandler(req, res, next);
+  },
+];
+
+module.exports = {
+  employedFindByIdValidator,
+  employedCreateValidator,
+  employedUpdateValidator,
+  employedDeleteValidator,
+};
