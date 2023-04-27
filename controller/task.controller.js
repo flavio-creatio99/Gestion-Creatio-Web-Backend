@@ -14,13 +14,15 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { id } = req;
+    const {
+      params: { id },
+    } = req;
 
     if (!id) {
       res.status(400).send({ message: 'Id not founded' });
     }
 
-    const taskFounded = await Task.findByPk(id);
+    const taskFounded = await Task.findByPk(Number(id));
 
     if (!taskFounded) {
       res.status(404).send({ message: 'Task not found' });
@@ -59,21 +61,13 @@ const createTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const { id, body: name, description, expiresDate, isFinished } = req;
+    const {
+      params: { id },
+      body: { name, description, expiresDate, isFinished },
+    } = req;
 
-    if (
-      !id ||
-      name === '' ||
-      !name ||
-      description === '' ||
-      !description ||
-      !expiresDate ||
-      !isFinished
-    ) {
-      res.status(400).send({ message: 'Invalid fields in body' });
-    }
-
-    const taskFounded = await Task.findByPk(id);
+  
+    const taskFounded = await Task.findByPk(Number(id));
 
     if (!taskFounded) {
       res.status(400).send({ message: 'Task not founded' });
@@ -83,7 +77,7 @@ const updateTask = async (req, res) => {
       const taskUpdated = await Task.update(
         { ...taskFounded, ...changes },
         {
-          where: { id: id },
+          where: { id: Number(id) },
         }
       );
 
@@ -102,14 +96,16 @@ const updateTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   try {
-    const { id } = req;
+    const {
+      params: { id },
+    } = req;
 
     if (!id) {
       res.status(400).send({ message: 'Id not founded' });
     }
 
     const taskDeleted = await Task.destroy({
-      where: { id: id },
+      where: { id: Number(id) },
     });
 
     if (taskDeleted > 0) {
@@ -124,4 +120,4 @@ const deleteTask = async (req, res) => {
   }
 };
 
-module.exports = { findAll, findById, create: createTask, update: updateTask, deleteById: deleteTask };
+module.exports = { findAll, findById, createTask, updateTask, deleteTask };

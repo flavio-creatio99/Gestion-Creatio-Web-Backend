@@ -28,7 +28,10 @@ const sequelize = new Sequelize(DBNAME, DBUSER, DBPASSWORD, {
 
 async function connection() {
   try {
-    await sequelize.sync({ force: true });
+    NODE_ENV === consts.PRODUCTION
+      ? await sequelize.sync({ alter: true })
+      : await sequelize.sync({ force: true });
+
     console.log('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
