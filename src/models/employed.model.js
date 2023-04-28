@@ -1,8 +1,8 @@
-const { sequelize } = require("../db/connection");
-const { DataTypes } = require("sequelize");
+const { sequelize } = require('../db/connection');
+const { DataTypes } = require('sequelize');
 
 const Employed = sequelize.define(
-  "Employed",
+  'Employed',
   {
     id: {
       type: DataTypes.UUID,
@@ -22,15 +22,15 @@ const Employed = sequelize.define(
       type: DataTypes.TEXT,
     },
     isManager: {
-      type:DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN,
     },
     phone: {
-      type: DataTypes.INTEGER
-    }
+      type: DataTypes.INTEGER,
+    },
   },
   {
     timestamps: false,
-    tableName: "employed",
+    tableName: 'employed',
   }
 );
 

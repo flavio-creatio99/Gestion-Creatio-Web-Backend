@@ -7,7 +7,7 @@ const validatorHandler = (req, res, next) => {
     return next();
   } catch (error) {
     // Enviar un array con los mensajes de errores
-    res.status(403).send({message: error.array()});
+    res.status(403).send({ message: error.array() });
   }
 };
 

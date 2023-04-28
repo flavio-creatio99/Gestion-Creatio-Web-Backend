@@ -66,7 +66,6 @@ const updateTask = async (req, res) => {
       body: { name, description, expiresDate, isFinished },
     } = req;
 
-  
     const taskFounded = await Task.findByPk(Number(id));
 
     if (!taskFounded) {

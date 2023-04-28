@@ -4,9 +4,9 @@ const Employed = require('../models/employed.model');
 //buscar a todos
 const findAll = async (req, res) => {
   try {
-    const employees = await Employed.findAll();
+    const employed = await Employed.findAll();
 
-    res.status(200).send(employees);
+    res.status(200).send(employed);
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -50,24 +50,12 @@ const createEmployed = async (req, res) => {
       key != 'isManager' &&
       key != 'phone'
     ) {
-      res
-        .status(400)
-        .send({
-          message:
-            'The body that you have introduced includes something more than what can be passed on.',
-        });
+      res.status(400).send({
+        message:
+          'The body that you have introduced includes something more than what can be passed on.',
+      });
       return;
     }
-  }
-
-  if (!name || !surname || !email || !password || !isManager || !phone) {
-    res
-      .status(400)
-      .send({
-        message:
-          'One of the following keys is missing or is empty in request body: name, surname, email, password, isManager, phone',
-      });
-    return;
   }
 
   try {
@@ -83,9 +71,9 @@ const createEmployed = async (req, res) => {
     });
 
     if (!employedCreated.id) {
-        res.status(400).send({ message: 'Employed not created' })
+      res.status(400).send({ message: 'Employed not created' });
     } else {
-        res.status(200).send(employedCreated);
+      res.status(200).send(employedCreated);
     }
   } catch (error) {
     res
@@ -108,12 +96,10 @@ const updateEmployed = async (req, res) => {
         key != 'isManager' &&
         key != 'phone'
       ) {
-        res
-          .status(400)
-          .send({
-            message:
-              'The body that you have introduced includes something more than what can be passed on.',
-          });
+        res.status(400).send({
+          message:
+            'The body that you have introduced includes something more than what can be passed on.',
+        });
         return;
       }
     }
@@ -130,8 +116,7 @@ const updateEmployed = async (req, res) => {
       ...req.body,
     };
 
-    const { name, surname, email, password, isManager, phone } =
-    employedMerged;
+    const { name, surname, email, password, isManager, phone } = employedMerged;
 
     const employedUpdated = await Employed.update(
       {
@@ -150,9 +135,9 @@ const updateEmployed = async (req, res) => {
     );
 
     if (employedUpdated > 0) {
-        res.status(200).send({ message: 'Employed updated successfully' });
+      res.status(200).send({ message: 'Employed updated successfully' });
     } else {
-        res.status(400).send({ message: 'Employed not updated' });
+      res.status(400).send({ message: 'Employed not updated' });
     }
   } catch (error) {
     res
@@ -166,12 +151,14 @@ const deleteEmployed = async (req, res) => {
   try {
     const id = req.params.id;
 
-    const employedDeleted = await employedFounded.destroy({ where: { id: id} });
+    const employedDeleted = await employedFounded.destroy({
+      where: { id: id },
+    });
 
-    if ( employedDeleted > 0) {
-        res.status(200).send({ message: 'Employed deleted' });
-     } else {
-        res.status(400).send({ message: 'Employed not deleted or not found'});
+    if (employedDeleted > 0) {
+      res.status(200).send({ message: 'Employed deleted' });
+    } else {
+      res.status(400).send({ message: 'Employed not deleted or not found' });
     }
   } catch (error) {
     res
