@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 //Routes
 const taskRouter = require('./task.router');
+const employedRouter = require('./employed.router');
 
 
 const initRouters = (app) => {
@@ -9,7 +10,7 @@ const initRouters = (app) => {
     const RouterController = Router();
     // Add Routes 
     RouterController.use('/task',taskRouter);
-    // RouterController.use('/employed',employedRouter);
+    RouterController.use('/employed',employedRouter);
     // Define route master with version
     app.use('/api/v1', RouterController)
 };
