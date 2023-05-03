@@ -29,7 +29,7 @@ const config = {
 
 const consts = Object.freeze({
   PRODUCTION: 'production',
-  DEVELOP: 'development',
+  DEVELOP: 'develop',
   TEST: 'test',
 });
 
