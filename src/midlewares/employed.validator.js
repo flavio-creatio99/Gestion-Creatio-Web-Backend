@@ -17,11 +17,14 @@ const employedCreateValidator = [
     .trim()
     .withMessage('This field cannot have spaces')
     .isEmail()
-    .withMessage('Please input your email')
+    .withMessage('')
     .custom((value) => {
-      if (!value.includes('@creatio-control.com')) {
+      const postAt = value.indexOf('@');
+      const domain = value.substring(postAt + 1);
+      if (domain !== 'creatio-control.com') {
         throw new Error('The e-mail address should be "@creatio-control.com".');
       }
+      return true;
     }),
   body('password')
     .notEmpty()
