@@ -5,7 +5,10 @@ const associations = () => {
   // Generate associations between task and employed
   Employed.hasMany(Task, {
     as: 'task',
-    foreignKey: 'employedId',
+    foreignKey: {
+      name: 'employedId',
+      allowNull: false
+    },
   });
 
   Task.belongsTo(Employed, {
