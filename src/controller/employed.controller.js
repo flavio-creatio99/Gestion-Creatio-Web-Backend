@@ -60,7 +60,7 @@ const createEmployed = async (req, res) => {
     }
   } catch (error) {
     res
-      .statu(error?.error || 500)
+      .status(error?.error || 500)
       .send({ message: error?.message || 'Internal server error' });
   }
 };
@@ -107,7 +107,7 @@ const updateEmployed = async (req, res) => {
     }
   } catch (error) {
     res
-      .statu(error?.error || 500)
+      .status(error?.error || 500)
       .send({ message: error?.message || 'Internal server error' });
   }
 };
@@ -117,7 +117,7 @@ const deleteEmployed = async (req, res) => {
   try {
     const id = req.params.id;
 
-    const employedDeleted = await employedFounded.destroy({
+    const employedDeleted = await Employed.destroy({
       where: { id: id },
     });
 
@@ -128,7 +128,7 @@ const deleteEmployed = async (req, res) => {
     }
   } catch (error) {
     res
-      .statu(error?.error || 500)
+      .status(error?.error || 500)
       .send({ message: error?.message || 'Internal server error' });
   }
 };
