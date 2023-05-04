@@ -1,4 +1,5 @@
 const Task = require('../models/task.model');
+const Employed = require('../models/employed.model');
 
 const findAll = async (req, res) => {
   try {
@@ -22,7 +23,7 @@ const findById = async (req, res) => {
       res.status(400).send({ message: 'Id not founded' });
     }
 
-    const taskFounded = await Task.findByPk(Number(id));
+    const taskFounded = await Task.findByPk(id);
 
     if (!taskFounded) {
       res.status(404).send({ message: 'Task not found' });
@@ -41,11 +42,14 @@ const createTask = async (req, res) => {
     const {
       body: { name, description, employedId },
     } = req;
-    const taskCreated = await Task.create({ name, description, employedId });
 
-    if (name === '' || description === '' || employedId === '') {
-      res.status(400).send({ message: 'Invalid fields in body' });
+    const employedFounded = await Employed.findByPk(employedId);
+
+    if (!employedFounded) {
+      res.status(404).send({ message: "Id's employed not founded" });
     }
+
+    const taskCreated = await Task.create({ name, description, employedId });
 
     if (!taskCreated.id) {
       res.status(400).send({ message: 'Task not created' });
@@ -66,7 +70,7 @@ const updateTask = async (req, res) => {
       body: { name, description, expiresDate, isFinished },
     } = req;
 
-    const taskFounded = await Task.findByPk(Number(id));
+    const taskFounded = await Task.findByPk(id);
 
     if (!taskFounded) {
       res.status(400).send({ message: 'Task not founded' });

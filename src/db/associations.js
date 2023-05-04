@@ -7,7 +7,7 @@ const associations = () => {
     as: 'task',
     foreignKey: {
       name: 'employedId',
-      allowNull: false
+      allowNull: false,
     },
   });
 
