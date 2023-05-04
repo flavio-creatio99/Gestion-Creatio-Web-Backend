@@ -30,7 +30,7 @@ async function connection() {
   try {
     NODE_ENV === consts.PRODUCTION
       ? await sequelize.sync({ alter: true })
-      : await sequelize.sync({ force: true });
+      : await sequelize.sync({ alter: true });
 
     console.log('Connection has been established successfully.');
   } catch (error) {
