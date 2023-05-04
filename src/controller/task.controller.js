@@ -80,7 +80,7 @@ const updateTask = async (req, res) => {
       const taskUpdated = await Task.update(
         { ...taskFounded, ...changes },
         {
-          where: { id: Number(id) },
+          where: { id: id},
         }
       );
 
@@ -108,7 +108,7 @@ const deleteTask = async (req, res) => {
     }
 
     const taskDeleted = await Task.destroy({
-      where: { id: Number(id) },
+      where: { id: id },
     });
 
     if (taskDeleted > 0) {
