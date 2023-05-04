@@ -17,12 +17,12 @@ const employedCreateValidator = [
     .trim()
     .withMessage('This field cannot have spaces')
     .isEmail()
-    .withMessage('This field needs to bevalidatorHandler an email')
     .withMessage('Please input your email')
-    .custom(({ req: request }) =>
-      request.body.email.includes('@creatio-control.com')
-    )
-    .withMessage('The e-mail address should be "@creatio-control.com".'),
+    .custom((value) => {
+      if (!value.includes('@creatio-control.com')) {
+        throw new Error('The e-mail address should be "@creatio-control.com".');
+      }
+    }),
   body('password')
     .notEmpty()
     .isStrongPassword({
@@ -38,10 +38,7 @@ const employedCreateValidator = [
     .notEmpty()
     .withMessage('Please input your phone')
     .isNumeric()
-    .isMobilePhone({
-      //options identifica la localización del telefono en el país el cual pertenece
-      options: ['es-ES'],
-    }),
+    .isMobilePhone('es-ES'),
   // Usamos nuestro manejador de errores por si no se cumple la validación devolvera los errores
   (req, res, next) => {
     validatorHandler(req, res, next);
@@ -63,14 +60,7 @@ const employedUpdateValidator = [
       'The password must have a minimum of 6 characters, a minimum of one uppercase letter and a minimum of one symbol.'
     ),
   body('isManager').optional().isBoolean(),
-  body('phone')
-    .optional()
-    .escape()
-    .isNumeric()
-    .isMobilePhone({
-      //options identifica la localización del telefono en el país el cual pertenece
-      options: ['es-ES'],
-    }),
+  body('phone').optional().escape().isNumeric().isMobilePhone('es-ES'),
   // Usamos nuestro manejador de errores por si no se cumple la validación devolvera los errores
   (req, res, next) => {
     validatorHandler(req, res, next);
